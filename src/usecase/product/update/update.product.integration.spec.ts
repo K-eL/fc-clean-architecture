@@ -11,23 +11,23 @@ const createInput = {
 
 describe("Integration test for product update use case", () => {
 
-  let sequelize: Sequelize;
+	let sequelize: Sequelize;
 
-  beforeEach(async () => {
-    sequelize = new Sequelize({
-      dialect: "sqlite",
-      storage: ":memory:",
-      logging: false,
-      sync: { force: true },
-    });
+	beforeEach(async () => {
+		sequelize = new Sequelize({
+			dialect: "sqlite",
+			storage: ":memory:",
+			logging: false,
+			sync: { force: true },
+		});
 
-    await sequelize.addModels([ProductModel]);
-    await sequelize.sync();
-  });
+		await sequelize.addModels([ProductModel]);
+		await sequelize.sync();
+	});
 
-  afterEach(async () => {
-    await sequelize.close();
-  });
+	afterEach(async () => {
+		await sequelize.close();
+	});
 
 	it("should update a product", async () => {
 		const productRepository = new ProductRepository();
@@ -63,7 +63,7 @@ describe("Integration test for product update use case", () => {
 		const updateProductUseCase = new UpdateProductUseCase(productRepository);
 		await expect(() => {
 			return updateProductUseCase.execute(product);
-		}).rejects.toThrow("Name is required");
+		}).rejects.toThrow("Product: Name is required");
 	});
 
 	it("should throw an error when product price is zero", async () => {
@@ -79,7 +79,7 @@ describe("Integration test for product update use case", () => {
 		const updateProductUseCase = new UpdateProductUseCase(productRepository);
 		await expect(() => {
 			return updateProductUseCase.execute(product);
-		}).rejects.toThrow("Price must be greater than zero");
+		}).rejects.toThrow("Product: Price must be greater than zero");
 	});
 
 });
